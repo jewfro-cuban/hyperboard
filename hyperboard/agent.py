@@ -42,7 +42,7 @@ class Agent:
     def append(self, name, index, value):
         if math.isinf(value):
             print('HyperBorad agent get invalid value: %f' % value)
-            sys.exit()
+            raise ValueError('HyperBorad agent get invalid value: %f' % value)
         url = self.url + '/append'
         data = { 'json': json.dumps(dict(
             name = name,
@@ -53,4 +53,4 @@ class Agent:
         result = r.content.decode()
         if result != 'success':
             print('HyperBorad agent failed to append: %s' % result)
-            sys.exit()
+            raise ConnectionError('HyperBorad agent failed to append: %s' % result)            
