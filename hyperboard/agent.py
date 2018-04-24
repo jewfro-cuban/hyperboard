@@ -5,11 +5,15 @@ import requests
 
 class Agent:
 
-    def __init__(self, username = '', password = '', address = '127.0.0.1', port = 5000):
+    def __init__(self, username = '', password = '', address='', port=5000):
+        self.disabled = not address
         self.url = 'http://%s:%d' % (address, port)
         self.auth = (username, password)
 
     def register(self, hyperparameters, metric, overwrite = False):
+        if self.disabled:
+            return
+        
         url = self.url + '/register'
         data = { 'json': json.dumps(dict(
             hyperparameters = hyperparameters,
@@ -40,6 +44,9 @@ class Agent:
         return name
 
     def append(self, name, index, value):
+        if self.disabled:
+            return
+        
         if math.isinf(value):
             print('HyperBorad agent get invalid value: %f' % value)
             raise ValueError('HyperBorad agent get invalid value: %f' % value)
