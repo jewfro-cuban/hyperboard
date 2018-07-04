@@ -31,7 +31,7 @@ class Recorder:
 
     def register(self, hyperparameters, metric, overwrite):
         md5 = hashlib.md5()
-        hyperjson = json.dumps(hyperparameters, sort_keys = True)
+        hyperjson = json.dumps(hyperparameters, sort_keys = False)
         md5.update(hyperjson.encode())
         md5.update(metric.encode())
         name = md5.hexdigest()
